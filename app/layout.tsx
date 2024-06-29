@@ -5,6 +5,7 @@ const inter = Inter({ subsets: ['latin'] })
 
 import Header from './components/Header'
 import MainNavigation from './components/MainNavigation'
+import PageTransition from './components/PageTransition'
 
 export default function RootLayout({
   children,
