@@ -7,72 +7,54 @@
 //     )
 //   }
 "use client"
-import React, { useState, useRef } from 'react';
-import axios from 'axios'; // Or your preferred HTTP client
+// components/UploadFile.js
+import { useState } from 'react';
 
-const UploadLargeFile = () => {
-  const [uploadProgress, setUploadProgress] = useState(0);
-  const [isUploading, setIsUploading] = useState(false);
-  const [uploadError, setUploadError] = useState(null);
-  const fileInputRef = useRef(null);
+export default function UploadFile() {
+  const [file, setFile] = useState(null);
+  const [uploading, setUploading] = useState(false);
+  const [message, setMessage] = useState('');
 
-  const handleFileChange = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      startUpload(file);
-    }
+  const handleFileChange = (e) => {
+    setFile(e.target.files[0]);
   };
 
-  const startUpload = async (file) => {
-    setIsUploading(true);
-    setUploadError(null);
+  const handleUpload = async () => {
+    if (!file) return alert('Please select a file first.');
 
+    setUploading(true);
+    setMessage('');
+    let presignedUrl = ''
     try {
-      // Replace with your actual pre-designed URL
-      const uploadUrl = 'https://your-server.com/api/upload';
-
-      const formData = new FormData();
-      formData.append('file', file);
-
-      const response = await axios.post(uploadUrl, formData, {
-        onUploadProgress: (progressEvent) => {
-          const progress = Math.round(
-            (progressEvent.loaded * 100) / progressEvent.total
-          );
-          setUploadProgress(progress);
+      // Upload the file to S3 using the pre-signed URL
+      const response = await fetch(presignedUrl, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': file.type,
         },
+        body: file,
       });
 
-      // Handle successful upload
-      console.log('File uploaded successfully:', response.data);
+      if (response.ok) {
+        setMessage('File uploaded successfully!');
+      } else {
+        setMessage('Failed to upload file.');
+      }
     } catch (error) {
-      setUploadError(error);
-      console.error('Upload error:', error);
+      console.error('Error uploading file:', error);
+      setMessage('Failed to upload file.');
     } finally {
-      setIsUploading(false);
+      setUploading(false);
     }
   };
 
   return (
     <div>
-      <h2>Upload Large File</h2>
-      <input
-        type="file"
-        ref={fileInputRef}
-        onChange={handleFileChange}
-        accept="*" // Accept all file types
-      />
-
-      {isUploading && (
-        <div>
-          <p>Uploading... {uploadProgress}%</p>
-          <progress value={uploadProgress} max="100" />
-        </div>
-      )}
-
-      {uploadError && <p>Error: {uploadError.message}</p>}
+      <input type="file" onChange={handleFileChange} accept="audio/*,video/*" />
+      <button onClick={handleUpload} disabled={uploading}>
+        {uploading ? 'Uploading...' : 'Upload'}
+      </button>
+      {message && <p>{message}</p>}
     </div>
   );
-};
-
-export default UploadLargeFile;
+}
