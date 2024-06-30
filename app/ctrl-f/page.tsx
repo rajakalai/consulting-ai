@@ -8,23 +8,33 @@
 //   }
 "use client"
 // components/UploadFile.js
-import { useState } from 'react';
+// components/UploadFile.tsx
+import { useState, ChangeEvent } from 'react';
 
-export default function UploadFile() {
-  const [file, setFile] = useState(null);
+interface UploadFileProps {
+  presignedUrl: string;
+}
+
+const UploadFile: React.FC<UploadFileProps> = ({ presignedUrl }) => {
+  const [file, setFile] = useState<File | null>(null);
   const [uploading, setUploading] = useState(false);
   const [message, setMessage] = useState('');
 
-  const handleFileChange = (e) => {
-    setFile(e.target.files[0]);
+  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      setFile(e.target.files[0]);
+    }
   };
 
   const handleUpload = async () => {
-    if (!file) return alert('Please select a file first.');
+    if (!file) {
+      alert('Please select a file first.');
+      return;
+    }
 
     setUploading(true);
     setMessage('');
-    let presignedUrl = ''
+
     try {
       // Upload the file to S3 using the pre-signed URL
       const response = await fetch(presignedUrl, {
@@ -57,4 +67,6 @@ export default function UploadFile() {
       {message && <p>{message}</p>}
     </div>
   );
-}
+};
+
+export default UploadFile;
