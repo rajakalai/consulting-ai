@@ -1,5 +1,5 @@
 interface Chat {
-  id: number;
+  id: string;
   title: string;
   messages: { role: string; content: string }[];
 }
@@ -8,10 +8,9 @@ interface ChatHistoryProps {
   chats: Chat[];
   setCurrentChat: (chat: Chat) => void;
   startNewChat: () => void;
-  removeChat: (id: number) => void;
 }
 
-export default function ChatHistory({ chats, setCurrentChat, startNewChat, removeChat }: ChatHistoryProps) {
+export default function ChatHistory({ chats, setCurrentChat, startNewChat }: ChatHistoryProps) {
   return (
     <div className="space-y-4">
       <button 
@@ -20,23 +19,16 @@ export default function ChatHistory({ chats, setCurrentChat, startNewChat, remov
       >
         + New Chat
       </button>
-      <h2 className="font-bold text-lg text-purple-800">Previous Chats</h2>
-      {chats.map((chat) => (
-        <div key={chat.id} className="flex items-center justify-between">
-          <button
-            onClick={() => setCurrentChat(chat)}
-            className="flex-grow text-left p-2 hover:bg-purple-200 rounded transition duration-200 text-purple-700"
-          >
-            {chat.title}
-          </button>
-          <button
-            onClick={() => removeChat(chat.id)}
-            className="ml-2 p-1 text-red-500 hover:text-red-700 transition duration-200"
-          >
-            ✕
-          </button>
-        </div>
-      ))}
+      {/* <h2 className="font-bold text-lg text-gray-800">Previous Chats</h2>
+      {chats?.map((chat) => (
+        <button
+          key={chat.id}
+          onClick={() => setCurrentChat(chat)}
+          className="w-full text-left p-2 hover:bg-gray-300 rounded transition duration-200 text-gray-700"
+        >
+          {chat.title}
+        </button>
+      ))} */}
     </div>
   );
 }

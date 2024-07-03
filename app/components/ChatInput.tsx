@@ -1,28 +1,34 @@
-import { useState } from 'react';
+interface Chat {
+  id: string;
+  title: string;
+  messages: { role: string; content: string }[];
+}
 
-export default function ChatInput({ onSendMessage }) {
-  const [input, setInput] = useState('');
+interface ChatHistoryProps {
+  chats: Chat[];
+  setCurrentChat: (chat: Chat) => void;
+  startNewChat: () => void;
+}
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (input.trim()) {
-      onSendMessage({role: 'user', content: input});
-      setInput('');
-    }
-  };
-
+export default function ChatHistory({ chats, setCurrentChat, startNewChat }: ChatHistoryProps) {
   return (
-    <form onSubmit={handleSubmit} className="p-4 border-t">
-      <input
-        type="text"
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
-        placeholder="Ask any follow up..."
-        className="w-full p-2 rounded border"
-      />
-      <button type="submit" className="mt-2 px-4 py-2 bg-purple-600 text-white rounded">
-        Submit
+    <div className="space-y-4">
+      <button 
+        onClick={startNewChat}
+        className="w-full py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition duration-200"
+      >
+        + New Chat
       </button>
-    </form>
+      <h2 className="font-bold text-lg">Previous Chats</h2>
+      {chats?.map((chat) => (
+        <button
+          key={chat.id}
+          onClick={() => setCurrentChat(chat)}
+          className="w-full text-left p-2 hover:bg-gray-300 rounded transition duration-200"
+        >
+          {chat.title}
+        </button>
+      ))}
+    </div>
   );
 }
