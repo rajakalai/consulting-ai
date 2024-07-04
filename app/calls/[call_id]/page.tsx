@@ -311,9 +311,9 @@ const CallDetailPage = () => {
 
   const handleExport = async () => {
     try {
-      const response = await fetch(`https://2r14owmlna.execute-api.ap-south-1.amazonaws.com/prod/call/export_cleaned_call?call_id=${call_id}`);
+      const response = await fetch(`https://fj7isl6mih.execute-api.ap-south-1.amazonaws.com/prod/call/export_cleaned_call?call_id=${call_id}`);
       const data = await response.json();
-      console.log('response', response.json())
+      console.log('response data', response.json())
       if (data.file_url) {
         window.open(data.file_url, '_blank');
       } else {

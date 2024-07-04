@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 
 export async function POST() {
-  const response = await fetch('https://2r14owmlna.execute-api.ap-south-1.amazonaws.com/prod/call/list', {
+  const response = await fetch('https://fj7isl6mih.execute-api.ap-south-1.amazonaws.com/prod/call/list', {
     method: 'POST',
     headers: {
       'x-api-key': 'your-api-key-here',
