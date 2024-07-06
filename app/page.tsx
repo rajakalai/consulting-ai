@@ -3,6 +3,7 @@ import { useState } from 'react';
 import PreviousSearches from './components/PreviousSearches';
 import SearchBar from './components/SearchBar';
 import FilterSection from './components/FilterSection';
+import ProjectCards from './components/ProjectCards';
 
 export default function Home() {
   const [searches, setSearches] = useState([
@@ -19,18 +20,19 @@ export default function Home() {
 
   return (
     <main className="flex-1 bg-white p-6">
-      <SearchBar />
+      <ProjectCards />
+      {/* <SearchBar />
       <div className="mt-6 flex gap-6">
         <div className="w-3/12">
           <PreviousSearches searches={searches} removeSearch={removeSearch} />
         </div>
         <div className="w-6/12">
-          {/* Space for future content */}
+          <ProjectCards />
         </div>
         <div className="w-3/12">
           <FilterSection />
         </div>
-      </div>
+      </div> */}
     </main>
   );
 }

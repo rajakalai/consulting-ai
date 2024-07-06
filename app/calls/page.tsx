@@ -140,35 +140,35 @@ const CallsPage = () => {
 
   return (
     <div className="flex justify-center h-[calc(100vh-140px)] text-black">
-      <div className="p-4 w-full max-w-6xl">
-        <h1 className="text-3xl font-bold mb-6 text-center text-purple-600">Call Details</h1>
-        <div className="overflow-x-auto bg-white shadow-md rounded-lg">
-          <table className="min-w-full leading-normal">
-            <thead className="bg-gray-100">
+      <div className="p-4 w-full">
+        <h1 className="text-3xl font-bold mb-6 text-center">Call Details</h1>
+        <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
+          <table className="w-full text-sm text-left rtl:text-right text-gray-700">
+            <thead className="text-xs text-gray-700 uppercase bg-gray-50 py-5">
               <tr>
-                <th className="px-5 py-3 border-b-2 border-gray-200 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                <th className="px-6 py-5 border-b-2 border-gray-200 text-left text-xs font-bold text-gray-800 uppercase tracking-wider">
                   Call Id
                 </th>
-                <th className="px-5 py-3 border-b-2 border-gray-200 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                <th className="px-6 py-5 border-b-2 border-gray-200 text-left text-xs font-bold text-gray-800 uppercase tracking-wider">
                   Project Id
                 </th>
-                <th className="px-5 py-3 border-b-2 border-gray-200 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                <th className="px-6 py-5 border-b-2 border-gray-200 text-left text-xs font-bold text-gray-800 uppercase tracking-wider">
                   Interviewee Name
                 </th>
-                <th className="px-5 py-3 border-b-2 border-gray-200 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                <th className="px-6 py-5 border-b-2 border-gray-200 text-left text-xs font-bold text-gray-800 uppercase tracking-wider">
                   Interviewee Role
                 </th>
-                <th className="px-5 py-3 border-b-2 border-gray-200 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                <th className="px-6 py-5 border-b-2 border-gray-200 text-left text-xs font-bold text-gray-800 uppercase tracking-wider">
                   Created At
                 </th>
-                <th className="px-5 py-3 border-b-2 border-gray-200 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                <th className="px-6 py-5 border-b-2 border-gray-200 text-left text-xs font-bold text-gray-800 uppercase tracking-wider">
                   Updated At
                 </th>
               </tr>
             </thead>
             <tbody>
               {calls.map(call => (
-                <tr key={call.call_id} onClick={() => handleRowClick(call.call_id)} className="cursor-pointer hover:bg-gray-50">
+                <tr key={call.call_id} onClick={() => handleRowClick(call.call_id)} className="cursor-pointer odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
                   <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">{call.call_id}</td>
                   <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">{call.project_id}</td>
                   <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">{call.interviewee_name}</td>
