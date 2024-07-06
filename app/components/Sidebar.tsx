@@ -6,7 +6,7 @@ export default function Sidebar() {
     ]
   
     return (
-      <aside className="w-1/4 bg-[#252538] p-4 text-white">
+      <aside className="w-1/4 shadow-md p-4 text-white">
         <h2 className="font-bold mb-4">Previous chats</h2>
         <button className="w-full bg-purple-600 text-white py-2 rounded mb-4">+ New chat</button>
         {/* <ul className="bg-white rounded-lg shadow-md p-2">

@@ -34,7 +34,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Header />
         <div className="flex flex-1 overflow-hidden">
           <Sidebar />
-          <main className="flex-1 overflow-auto bg-gray-100"> {/* Added bg-gray-100 for contrast */}
+          <main className="flex-1 overflow-auto bg-white"> {/* Added bg-gray-100 for contrast */}
             {children}
           </main>
         </div>

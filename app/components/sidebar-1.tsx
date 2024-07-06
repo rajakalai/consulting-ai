@@ -14,9 +14,9 @@ interface SidebarItem {
 const sidebarItems: SidebarItem[] = [
   { icon: FiHome, text: 'Home', href: '/' },
   { icon: FiPhone, text: 'Calls', href: '/calls' },
-  { icon: FiBarChart2, text: 'Quant Tracker', href: '/quant-tracker' },
-  { icon: FiSearch, text: 'Ctrl+F', href: '/search' },
-  { icon: FiMessageSquare, text: 'Junior GPT', href: '/junior-gpt' },
+  { icon: FiBarChart2, text: 'Quant Tracker', href: '/quant-trackers' },
+  { icon: FiSearch, text: 'Ctrl+F', href: '/ctrl-f' },
+  { icon: FiMessageSquare, text: 'Junior GPT', href: '/juniorgpt' },
   { icon: FiSettings, text: 'Settings', href: '/settings' },
 ]
 
