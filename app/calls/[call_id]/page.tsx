@@ -44,7 +44,7 @@ const CallDetailPage = () => {
           setCall(foundCall);
 
           // Fetch transcribed content
-          const transcribedResponse = await fetch(`/api/calls/${call_id}?call_id=${call_id}`, {
+          const transcribedResponse = await fetch(`/api/calls/${call_id}`, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' },
           });
@@ -52,7 +52,7 @@ const CallDetailPage = () => {
           setTranscribedContent(transcribedData.transcribed_paragraph_content || null);
 
           // Fetch cleaned call data
-          const cleanedResponse = await fetch(`/api/cleaned_call/${call_id}?call_id=${call_id}`, {
+          const cleanedResponse = await fetch(`/api/cleaned_call/${call_id}`, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' },
           });
@@ -60,12 +60,12 @@ const CallDetailPage = () => {
           setQuestionsAnswers(cleanedData?.cleaned_transcript?.question_answer_json?.questions_answers || []);
 
           // Fetch key takeaway
-          const takeawayResponse = await fetch(`https://fj7isl6mih.execute-api.ap-south-1.amazonaws.com/prod/call/get_key_takeaway?call_id=${call_id}`);
+          const takeawayResponse = await fetch(`/api/calls/get_key_takeaway?call_id=${call_id}`);
           const takeawayData = await takeawayResponse.json();
           setKeyTakeaway(takeawayData.key_takeaway || null);
 
           // Fetch summary
-          const summaryResponse = await fetch(`https://fj7isl6mih.execute-api.ap-south-1.amazonaws.com/prod/call/get_summary?call_id=${call_id}`);
+          const summaryResponse = await fetch(`/api/calls/get_summary?call_id=${call_id}`);
           const summaryData = await summaryResponse.json();
           setSummary(summaryData.summaries || null);
 
