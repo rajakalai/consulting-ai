@@ -139,7 +139,7 @@ const CallsPage = () => {
   }
 
   return (
-    <div className="flex justify-center h-[calc(100vh-140px)] text-black w-screen">
+    <div className="flex justify-center h-[calc(100vh-140px)] text-black">
       <div className="p-4 w-full max-w-6xl">
         <h1 className="text-3xl font-bold mb-6 text-center text-purple-600">Call Details</h1>
         <div className="overflow-x-auto bg-white shadow-md rounded-lg">
