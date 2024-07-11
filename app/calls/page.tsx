@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { Call } from '../types/calls';
 import { FiChevronUp, FiChevronDown, FiFilter, FiX } from 'react-icons/fi';
 import Select from 'react-select';
+import CreateCall from '../components/CreateCall';
 
 type SortKey = keyof Call;
 type SortOrder = 'asc' | 'desc';
@@ -21,7 +22,13 @@ const CallsPage = () => {
   const filterModalRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
 
-  useEffect(() => {
+  const handleFileUploaded = (callId) => {
+    console.log(`File uploaded successfully for call ID: ${callId}`);
+    fetchCalls()
+    // Do something with the callId, like updating the UI or fetching new data
+  };
+
+  function fetchCalls( ) {
     fetch('/api/calls', {
       method: 'POST',
       headers: {
@@ -38,6 +45,10 @@ const CallsPage = () => {
         console.error('Error fetching calls:', error);
         setIsLoading(false);
       });
+  }
+
+  useEffect(() => {
+    fetchCalls()
   }, []);
 
   useEffect(() => {
@@ -117,6 +128,7 @@ const CallsPage = () => {
       <div className="p-4 w-full">
         <h1 className="text-3xl font-bold mb-6 text-center">Call Details</h1>
         <div className="flex justify-end mb-4 relative">
+          <CreateCall  onFileUploaded={handleFileUploaded}/>
           <button
             className="bg-purple-600 text-white px-4 py-2 rounded-lg flex items-center"
             onClick={() => setIsFilterModalOpen(!isFilterModalOpen)}

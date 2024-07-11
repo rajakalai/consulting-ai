@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-export default function CreateCall() {
+export default function CreateCall({ onFileUploaded }) {
   const [showModal, setShowModal] = useState(false);
   const [loading, setLoading] = useState(false);
   const [projects, setProjects] = useState([]);
@@ -14,6 +14,7 @@ export default function CreateCall() {
     interviewee_role: '',
     file: null
   });
+  const [fileName, setFileName] = useState('');
 
   useEffect(() => {
     fetchProjects();
@@ -22,10 +23,24 @@ export default function CreateCall() {
   const fetchProjects = async () => {
     try {
       const response = await fetch('/api/projects');
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
       const data = await response.json();
+      console.log('API response:', data);
+      
+    //   if (data.error) {
+    //     throw new Error(data.error);
+    //   }
+      
+    //   if (!data.projects || !Array.isArray(data.projects)) {
+    //     throw new Error('Invalid project data format');
+    //   }
+      
       setProjects(data);
     } catch (error) {
       console.error('Failed to fetch projects:', error);
+      toast.error(`Failed to load projects: ${error.message}`);
     }
   };
 
@@ -35,7 +50,9 @@ export default function CreateCall() {
   };
 
   const handleFileChange = (e) => {
-    setFormData(prev => ({ ...prev, file: e.target.files[0] }));
+    const file = e.target.files[0];
+    setFormData(prev => ({ ...prev, file: file }));
+    setFileName(file ? file.name : '');
   };
 
   const handleSubmit = async (e) => {
@@ -74,6 +91,10 @@ export default function CreateCall() {
 
       if (uploadResponse.ok) {
         toast.success("File uploaded successfully");
+        // Inform the parent component
+        if (onFileUploaded) {
+          onFileUploaded(call_id);
+        }
       } else {
         toast.error("File upload failed");
       }
@@ -86,7 +107,7 @@ export default function CreateCall() {
   };
 
   return (
-    <div className="p-4">
+    <div className="pr-4">
       <ToastContainer />
       <button
         onClick={() => setShowModal(true)}
@@ -98,7 +119,7 @@ export default function CreateCall() {
               <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
               <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
             </svg>
-            Loading...
+            Uploading...
           </div>
         ) : (
           "Create Call"
@@ -113,7 +134,7 @@ export default function CreateCall() {
               <form onSubmit={handleSubmit} className="mt-2 text-left">
                 <div className="mb-4">
                   <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="project_id">
-                    Project ID
+                    Project
                   </label>
                   <select
                     id="project_id"
@@ -123,7 +144,7 @@ export default function CreateCall() {
                   >
                     <option value="">Select a project</option>
                     {projects.map((project) => (
-                      <option key={project.id} value={project.id}>{project.name}</option>
+                      <option key={project.project_id} value={project.project_id}>{project.name}</option>
                     ))}
                   </select>
                 </div>
@@ -155,13 +176,21 @@ export default function CreateCall() {
                   <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="file">
                     File Upload
                   </label>
-                  <input
-                    type="file"
-                    id="file"
-                    name="file"
-                    onChange={handleFileChange}
-                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  />
+                  <div className="flex items-center">
+                    <label className="w-full flex flex-col items-center  bg-white text-blue rounded-lg shadow-lg tracking-wide uppercase border border-blue cursor-pointer hover:bg-blue-500 hover:text-white">
+                      {/* <svg className="w-8 h-8" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                        <path d="M16.88 9.1A4 4 0 0 1 16 17H5a5 5 0 0 1-1-9.9V7a3 3 0 0 1 4.52-2.59A4.98 4.98 0 0 1 17 8c0 .38-.04.74-.12 1.1zM11 11h3l-4-4-4 4h3v3h2v-3z" />
+                      </svg> */}
+                      <span className="my-2  leading-normal">
+                        {fileName || 'Select a file'}
+                      </span>
+                      <input
+                        type='file'
+                        className="hidden"
+                        onChange={handleFileChange}
+                      />
+                    </label>
+                  </div>
                 </div>
                 <div className="flex items-center justify-between mt-8">
                   <button
