@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server';
 export async function POST(request) {
   try {
     const body = await request.json();
-    const response = await fetch('https://fj7isl6mih.execute-api.ap-south-1.amazonaws.com/prod/call', {
+    const response = await fetch('https://v0t64zw040.execute-api.ap-south-1.amazonaws.com/prod/call', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

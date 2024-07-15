@@ -20,7 +20,7 @@ export default function ChatArea() {
     setIsLoading(true);
 
     try {
-      const response = await fetch('https://fj7isl6mih.execute-api.ap-south-1.amazonaws.com/prod/chat', {
+      const response = await fetch('https://v0t64zw040.execute-api.ap-south-1.amazonaws.com/prod/chat', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
